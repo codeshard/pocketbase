@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+from pocketbase.models.admin import Admin
 from pocketbase.models.utils.base_model import BaseModel
 from pocketbase.services.utils.crud_service import CrudService
-from pocketbase.models.admin import Admin
 
 
 class AdminAuthResponse:
@@ -84,7 +84,7 @@ class AdminService(CrudService):
         )
         return self.auth_response(response_data)
 
-    def authRefresh(
+    def auth_refresh(
         self, body_params: dict = {}, query_params: dict = {}
     ) -> AdminAuthResponse:
         """
@@ -100,7 +100,7 @@ class AdminService(CrudService):
             )
         )
 
-    def requestPasswordReset(
+    def request_password_reset(
         self, email: str, body_params: dict = {}, query_params: dict = {}
     ) -> bool:
         """Sends admin password reset request."""
@@ -115,7 +115,7 @@ class AdminService(CrudService):
         )
         return True
 
-    def confirmPasswordReset(
+    def confirm_password_reset(
         self,
         password_reset_token: str,
         password: str,
