@@ -1,10 +1,12 @@
+import tempfile
+from uuid import uuid4
+
+import pytest
+
 from pocketbase import PocketBase
 from pocketbase.models.admin import Admin
-from pocketbase.utils import ClientResponseError
 from pocketbase.stores.local_auth_store import LocalAuthStore
-from uuid import uuid4
-import pytest
-import tempfile
+from pocketbase.utils import ClientResponseError
 
 
 class TestLocalAuthStore:
@@ -44,6 +46,6 @@ def test_local_store_integration(client):
     l_store = LocalAuthStore(filepath=tmp)
     la_client = PocketBase(client.base_url, auth_store=l_store)
     with pytest.raises(ClientResponseError):
-        la_client.admins.authRefresh()
+        la_client.admins.auth_refresh()
     la_client.auth_store.save(client.auth_store.token, client.auth_store.model)
-    la_client.admins.authRefresh()
+    la_client.admins.auth_refresh()

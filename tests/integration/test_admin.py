@@ -1,10 +1,12 @@
+from os import environ, path
+from time import sleep
+from uuid import uuid4
+
+import pytest
+
 from pocketbase import PocketBase
 from pocketbase.models.admin import Admin
 from pocketbase.utils import ClientResponseError
-from uuid import uuid4
-import pytest
-from os import environ, path
-from time import sleep
 
 
 class TestAdminService:
@@ -46,7 +48,7 @@ class TestAdminService:
         client.admins.auth_with_password(state.new_email, new_password)
 
     def test_admin_password_reset(self, client: PocketBase, state):
-        assert client.admins.requestPasswordReset(state.new_email)
+        assert client.admins.request_password_reset(state.new_email)
         sleep(0.1)
         mail = environ.get("TMP_EMAIL_DIR") + f"/{state.new_email}"
         assert path.exists(mail)
@@ -55,7 +57,7 @@ class TestAdminService:
                 token = line.split("/confirm-password-reset/", 1)[1].split('"')[0]
         assert len(token) > 10
         new_password = uuid4().hex
-        assert client.admins.confirmPasswordReset(token, new_password, new_password)
+        assert client.admins.confirm_password_reset(token, new_password, new_password)
         client.admins.auth_with_password(state.new_email, new_password)
 
     def test_delete_admin(self, client: PocketBase, state):
@@ -77,6 +79,6 @@ def test_connection_error_exception():
 
 def test_auth_refresh(client):
     oldid = client.auth_store.model.id
-    ar = client.admins.authRefresh()
+    ar = client.admins.auth_refresh()
     assert client.auth_store.token == ar.token
     assert client.auth_store.model.id == oldid

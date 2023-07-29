@@ -1,7 +1,9 @@
+from uuid import uuid4
+
+import pytest
+
 from pocketbase import PocketBase
 from pocketbase.utils import ClientResponseError
-from uuid import uuid4
-import pytest
 
 
 class TestRecordService:
