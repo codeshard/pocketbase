@@ -4,6 +4,7 @@ from abc import ABC
 
 from pocketbase.models.admin import Admin
 from pocketbase.models.record import Record
+from pocketbase.stores.utils import is_token_expired
 
 
 class BaseAuthStore(ABC):
@@ -31,6 +32,11 @@ class BaseAuthStore(ABC):
     def model(self) -> Record | Admin | None:
         """Retrieves the stored model data (if any)."""
         return self.base_model
+
+    @property
+    def is_valid(self) -> bool:
+        """Loosely checks if the store has valid token (aka. existing and unexpired exp claim)."""
+        return not is_token_expired(token=self.base_token)
 
     def save(self, token: str = "", model: Record | Admin | None = None) -> None:
         """Saves the provided new token and model data in the auth store."""
