@@ -1,12 +1,12 @@
 from __future__ import annotations
+
 from dataclasses import dataclass
 from typing import List
-
 from urllib.parse import quote, urlencode
-from pocketbase.services.realtime_service import Callable, MessageData
 
-from pocketbase.models.utils.base_model import BaseModel
 from pocketbase.models.record import Record
+from pocketbase.models.utils.base_model import BaseModel
+from pocketbase.services.realtime_service import Callable, MessageData
 from pocketbase.services.utils.crud_service import CrudService
 from pocketbase.utils import camel_to_snake
 
@@ -216,7 +216,7 @@ class RecordService(CrudService):
         )
         return self.auth_response(response_data)
 
-    def authRefresh(
+    def auth_refresh(
         self, body_params: dict = {}, query_params: dict = {}
     ) -> RecordAuthResponse:
         """
@@ -232,7 +232,7 @@ class RecordService(CrudService):
             )
         )
 
-    def requestEmailChange(
+    def request_email_change(
         self, newEmail: str, body_params: dict = {}, query_params: dict = {}
     ) -> bool:
         """
@@ -246,7 +246,7 @@ class RecordService(CrudService):
         )
         return True
 
-    def confirmEmailChange(
+    def confirm_email_change(
         self, token: str, password: str, body_params: dict = {}, query_params: dict = {}
     ) -> bool:
         """
@@ -259,7 +259,7 @@ class RecordService(CrudService):
         )
         return True
 
-    def requestPasswordReset(
+    def request_password_reset(
         self, email: str, body_params: dict = {}, query_params: dict = {}
     ) -> bool:
         """Sends auth record password reset request."""
@@ -274,7 +274,7 @@ class RecordService(CrudService):
         )
         return True
 
-    def requestVerification(
+    def request_verification(
         self, email: str, body_params: dict = {}, query_params: dict = {}
     ) -> bool:
         """Sends email verification request."""
@@ -289,7 +289,7 @@ class RecordService(CrudService):
         )
         return True
 
-    def confirmPasswordReset(
+    def confirm_password_reset(
         self,
         password_reset_token: str,
         password: str,
@@ -316,7 +316,7 @@ class RecordService(CrudService):
         )
         return True
 
-    def confirmVerification(
+    def confirm_verification(
         self, token: str, body_params: dict = {}, query_params: dict = {}
     ) -> bool:
         """Confirms email verification request."""
