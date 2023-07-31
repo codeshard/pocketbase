@@ -90,16 +90,17 @@ class Client:
             files = None
             data = None
         try:
-            response = self.http_client.request(
-                method=method,
-                url=url,
-                params=params,
-                headers=headers,
-                json=body,
-                data=data,
-                files=files,
-                timeout=self.timeout,
-            )
+            with self.http_client as client:
+                response = client.request(
+                    method=method,
+                    url=url,
+                    params=params,
+                    headers=headers,
+                    json=body,
+                    data=data,
+                    files=files,
+                    timeout=self.timeout,
+                )
         except Exception as e:
             raise ClientResponseError(
                 f"General request error. Original error: {e}",
