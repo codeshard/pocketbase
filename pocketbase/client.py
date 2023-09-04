@@ -14,6 +14,7 @@ from pocketbase.services.realtime_service import RealtimeService
 from pocketbase.services.record_service import RecordService
 from pocketbase.services.settings_service import SettingsService
 from pocketbase.stores.base_auth_store import BaseAuthStore
+from pocketbase.stores.cookie_auth_store import CookieAuthStore
 from pocketbase.utils import ClientResponseError
 
 
@@ -91,6 +92,9 @@ class Client:
             data = None
         try:
             with self.http_client as client:
+                if isinstance(self.auth_store, CookieAuthStore):
+                    print(f"YES, {self.auth_store}")
+                    cookies = self.auth_store.cookies
                 response = client.request(
                     method=method,
                     url=url,
@@ -100,7 +104,9 @@ class Client:
                     data=data,
                     files=files,
                     timeout=self.timeout,
+                    cookies=cookies,
                 )
+                print(self.http_client.cookies)
         except Exception as e:
             raise ClientResponseError(
                 f"General request error. Original error: {e}",

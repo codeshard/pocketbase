@@ -72,7 +72,7 @@ class RecordService(CrudService):
         """Subscribe to realtime changes of any record from the collection."""
         return self.client.realtime.subscribe(self.collection_id_or_name, callback)
 
-    def subscribeOne(self, record_id: str, callback: Callable[[MessageData], None]):
+    def subscribe_one(self, record_id: str, callback: Callable[[MessageData], None]):
         """Subscribe to the realtime changes of a single record in the collection."""
         return self.client.realtime.subscribe(
             self.collection_id_or_name + "/" + record_id, callback
